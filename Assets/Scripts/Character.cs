@@ -5,14 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(ResizableSphere))]
 public class Character : MonoBehaviour {
 
+    [SerializeField] private ResizableSphere bulletSphere;
     [SerializeField] private float radiusUnitsPerSeconds = 1;
     
-    private ResizableSphere _resizableSphere;
+    private ResizableSphere _characterSphere;
 
     public bool Shrinking { get; private set; }
 
     private void Awake() {
-        _resizableSphere = GetComponent<ResizableSphere>();
+        _characterSphere = GetComponent<ResizableSphere>();
     }
 
     public void ActivateShrinking() {
@@ -27,7 +28,9 @@ public class Character : MonoBehaviour {
         Shrinking = Input.GetKey(KeyCode.Space);
 
         if (Shrinking) {
-            _resizableSphere.ChangeRadius(-radiusUnitsPerSeconds * Time.deltaTime);
+            var radiusDelta = radiusUnitsPerSeconds * Time.deltaTime;
+            _characterSphere.ChangeRadius(-radiusDelta);
+            bulletSphere.ChangeRadius(radiusDelta);
         }
     }
 
