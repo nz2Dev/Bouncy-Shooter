@@ -9,6 +9,8 @@ public class ResizableSphere : MonoBehaviour {
     [SerializeField] private float minRadius = 0.1f;
     [SerializeField] private float maxRadius = 5;
 
+    public float Radius => radius;
+
     private void Start() {
         SetRadius(radius);
     }

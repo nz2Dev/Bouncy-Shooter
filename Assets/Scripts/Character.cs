@@ -8,6 +8,7 @@ public class Character : MonoBehaviour {
     [SerializeField] private ResizableSphere bulletSphere;
     [SerializeField] private float radiusUnitsPerSeconds = 1;
     [SerializeField] private float startRadius = 5;
+    [SerializeField] private float bulletOffset = 0.5f;
     
     private ResizableSphere _characterSphere;
 
@@ -23,13 +24,38 @@ public class Character : MonoBehaviour {
     }
 
     private void Update() {
-        Charging = Input.GetKey(KeyCode.Space);
+        if (Input.GetMouseButtonDown(0)) {
+            StartCharging();
+        }
+
+        if (Input.GetMouseButtonUp(0)) {
+            ReleaseCharge();
+        }
 
         if (Charging) {
-            var radiusDelta = radiusUnitsPerSeconds * Time.deltaTime;
-            _characterSphere.ChangeRadius(-radiusDelta);
-            bulletSphere.ChangeRadius(radiusDelta);
+            Charge();
         }
+    }
+
+    private void StartCharging() {
+        Charging = true;
+
+        bulletSphere.SetRadiusToMinimum();
+        var initialDistanceToBullet = _characterSphere.Radius + bulletSphere.Radius + bulletOffset;
+        bulletSphere.transform.position = transform.position + transform.forward * initialDistanceToBullet;
+    }
+
+    private void Charge() {
+        var radiusDelta = radiusUnitsPerSeconds * Time.deltaTime;
+        _characterSphere.ChangeRadius(-radiusDelta);
+        bulletSphere.ChangeRadius(radiusDelta);
+    }
+
+    private void ReleaseCharge() {
+        Charging = false;
+
+        _characterSphere.SetRadius(startRadius);
+        bulletSphere.SetRadiusToMinimum();
     }
 
 }
