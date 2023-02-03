@@ -5,11 +5,23 @@ using UnityEngine;
 public class ResizableSphere : MonoBehaviour {
 
     [SerializeField] private GameObject geometry;
-    
+    [SerializeField] private float radius = 1f;
+    [SerializeField] private float minRadius = 0.1f;
+    [SerializeField] private float maxRadius = 5;
+
+    private void Start() {
+        radius = Mathf.Clamp(radius, minRadius, maxRadius);
+        SyncScaleWithRadius();
+    }
+
     public void ChangeRadius(float radiusDelta) {
-        var geometryScale = geometry.transform.localScale;
-        geometryScale += radiusDelta * Vector3.one;
-        geometry.transform.localScale = geometryScale;
+        radius += radiusDelta;
+        radius = Mathf.Clamp(radius, minRadius, maxRadius);
+        SyncScaleWithRadius();
+    }
+
+    private void SyncScaleWithRadius() {
+        geometry.transform.localScale = Vector3.one * radius;
     }
 
 }
