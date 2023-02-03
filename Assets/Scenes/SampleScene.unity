@@ -993,9 +993,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSphere: {fileID: 2017669832}
-  radiusUnitsPerSeconds: 1
-  startRadius: 1.5
-  bulletOffset: 0.5
+  radiusUnitsPerSeconds: 0.3
+  startRadius: 1
+  bulletOffset: 1
 --- !u!1 &1518222264
 GameObject:
   m_ObjectHideFlags: 0
