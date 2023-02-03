@@ -13,6 +13,10 @@ public class ResizableSphere : MonoBehaviour {
         SetRadius(radius);
     }
 
+    public void SetRadiusToMinimum() {
+        SetRadius(minRadius);
+    }
+
     public void SetRadius(float newRadius) {
         radius = Mathf.Clamp(newRadius, minRadius, maxRadius);
         SyncScaleWithRadius();

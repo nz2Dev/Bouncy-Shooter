@@ -7,6 +7,7 @@ public class Character : MonoBehaviour {
 
     [SerializeField] private ResizableSphere bulletSphere;
     [SerializeField] private float radiusUnitsPerSeconds = 1;
+    [SerializeField] private float startRadius = 5;
     
     private ResizableSphere _characterSphere;
 
@@ -14,6 +15,11 @@ public class Character : MonoBehaviour {
 
     private void Awake() {
         _characterSphere = GetComponent<ResizableSphere>();
+    }
+
+    private void Start() {
+        _characterSphere.SetRadius(startRadius);
+        bulletSphere.SetRadiusToMinimum();
     }
 
     private void Update() {

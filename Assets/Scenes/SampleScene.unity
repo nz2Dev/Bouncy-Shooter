@@ -977,6 +977,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   geometry: {fileID: 1518222264}
+  radius: 1
+  minRadius: 0.1
+  maxRadius: 5
 --- !u!114 &1512105382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,6 +994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSphere: {fileID: 2017669832}
   radiusUnitsPerSeconds: 1
+  startRadius: 3
 --- !u!1 &1518222264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,6 +1122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   geometry: {fileID: 1350809264}
+  radius: 1
+  minRadius: 0.1
+  maxRadius: 5
 --- !u!4 &2017669833
 Transform:
   m_ObjectHideFlags: 0
