@@ -10,24 +10,16 @@ public class Character : MonoBehaviour {
     
     private ResizableSphere _characterSphere;
 
-    public bool Shrinking { get; private set; }
+    public bool Charging { get; private set; }
 
     private void Awake() {
         _characterSphere = GetComponent<ResizableSphere>();
     }
 
-    public void ActivateShrinking() {
-        Shrinking = true;
-    }
-
-    public void StopShrinking() {
-        Shrinking = false;
-    }
-
     private void Update() {
-        Shrinking = Input.GetKey(KeyCode.Space);
+        Charging = Input.GetKey(KeyCode.Space);
 
-        if (Shrinking) {
+        if (Charging) {
             var radiusDelta = radiusUnitsPerSeconds * Time.deltaTime;
             _characterSphere.ChangeRadius(-radiusDelta);
             bulletSphere.ChangeRadius(radiusDelta);

@@ -10,14 +10,19 @@ public class ResizableSphere : MonoBehaviour {
     [SerializeField] private float maxRadius = 5;
 
     private void Start() {
-        radius = Mathf.Clamp(radius, minRadius, maxRadius);
+        SetRadius(radius);
+    }
+
+    public void SetRadius(float newRadius) {
+        radius = Mathf.Clamp(newRadius, minRadius, maxRadius);
         SyncScaleWithRadius();
     }
 
-    public void ChangeRadius(float radiusDelta) {
-        radius += radiusDelta;
-        radius = Mathf.Clamp(radius, minRadius, maxRadius);
+    public bool ChangeRadius(float radiusDelta) {
+        var changesRadius = radius + radiusDelta;
+        radius = Mathf.Clamp(changesRadius, minRadius, maxRadius);
         SyncScaleWithRadius();
+        return radius == changesRadius;
     }
 
     private void SyncScaleWithRadius() {
