@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BouncySphere : MonoBehaviour {
+[RequireComponent(typeof(ResizableSphere))]
+public class Character : MonoBehaviour {
 
-    [SerializeField] private GameObject geometry;
     [SerializeField] private float radiusUnitsPerSeconds = 1;
     
+    private ResizableSphere _resizableSphere;
+
     public bool Shrinking { get; private set; }
+
+    private void Awake() {
+        _resizableSphere = GetComponent<ResizableSphere>();
+    }
 
     public void ActivateShrinking() {
         Shrinking = true;
@@ -21,9 +27,7 @@ public class BouncySphere : MonoBehaviour {
         Shrinking = Input.GetKey(KeyCode.Space);
 
         if (Shrinking) {
-            var geometryScale = geometry.transform.localScale;
-            geometryScale -= radiusUnitsPerSeconds * Time.deltaTime * Vector3.one;
-            geometry.transform.localScale = geometryScale;
+            _resizableSphere.ChangeRadius(-radiusUnitsPerSeconds * Time.deltaTime);
         }
     }
 
