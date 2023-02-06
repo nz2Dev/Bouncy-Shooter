@@ -22,11 +22,6 @@ public class Bullet : MonoBehaviour, IBallShape {
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
     }
-
-    private void Start() {
-        _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-        _rigidbody.isKinematic = true;
-    }
     
     private void FixedUpdate() {
         if (Flying) {
@@ -58,6 +53,13 @@ public class Bullet : MonoBehaviour, IBallShape {
     public void Shoot(Vector3 direction) {
         _flyDirection = direction;
         Flying = true;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out Obstacle obstacle)) {
+            Flying = false;
+            Debug.Log("On Obstacle Triggered");
+        }
     }
 
 }
