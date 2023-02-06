@@ -20,10 +20,7 @@ public class Player : MonoBehaviour, IBallShape {
         Radius = startRadius;
         OnRadiusChanged?.Invoke();
 
-        bullet.SetRadiusToMinimum();
-
-        var initialDistanceToBullet = startRadius + bulletOffset;
-        bullet.SetPosition(transform.position + transform.forward * initialDistanceToBullet);
+        LoadBullet();
     }
 
     private void Update() {
@@ -43,7 +40,7 @@ public class Player : MonoBehaviour, IBallShape {
     private void StartCharging() {
         Charging = true;
 
-        bullet.SetRadiusToMinimum();
+        LoadBullet();
     }
 
     private void Charge() {
@@ -59,6 +56,12 @@ public class Player : MonoBehaviour, IBallShape {
         Charging = false;
 
         bullet.Shoot(transform.forward);
+    }
+
+    private void LoadBullet() {
+        var initialDistanceToBullet = startRadius + bulletOffset;
+        bullet.SetPosition(transform.position + transform.forward * initialDistanceToBullet);
+        bullet.SetRadiusToMinimum();
     }
 
 }
