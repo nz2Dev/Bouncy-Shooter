@@ -1,26 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Ball))]
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour, IBallShape {
 
-    [SerializeField] private Ball bulletSphere;
-    [SerializeField] private float radiusUnitsPerSeconds = 1;
-    [SerializeField] private float startRadius = 5;
-    [SerializeField] private float bulletOffset = 0.5f;
-    
-    private Ball _characterSphere;
+    public event Action OnRadiusChanged;
 
+    public float Radius { get; private set; }
     public bool Charging { get; private set; }
 
-    private void Awake() {
-        _characterSphere = GetComponent<Ball>();
-    }
+    [SerializeField] private Bullet bullet;
+    [SerializeField] private float radiusUnitsPerSeconds = 1;
+    [SerializeField] private float minRadius = 0.1f;
+    [SerializeField] private float maxRadius = 5;
+    [SerializeField] private float startRadius = 5;
+    [SerializeField] private float bulletOffset = 0.5f;
 
     private void Start() {
-        _characterSphere.SetRadius(startRadius);
-        bulletSphere.SetRadiusToMinimum();
+        Radius = startRadius;
+        OnRadiusChanged?.Invoke();
+
+        bullet.SetRadiusToMinimum();
     }
 
     private void Update() {
@@ -40,22 +41,34 @@ public class Player : MonoBehaviour {
     private void StartCharging() {
         Charging = true;
 
-        bulletSphere.SetRadiusToMinimum();
-        var initialDistanceToBullet = _characterSphere.Radius + bulletSphere.Radius + bulletOffset;
-        bulletSphere.transform.position = transform.position + transform.forward * initialDistanceToBullet;
+        bullet.SetRadiusToMinimum();
+        var initialDistanceToBullet = Radius + bullet.Radius + bulletOffset;
+        bullet.transform.position = transform.position + transform.forward * initialDistanceToBullet;
     }
 
     private void Charge() {
         var radiusDelta = radiusUnitsPerSeconds * Time.deltaTime;
-        _characterSphere.ChangeRadius(-radiusDelta);
-        bulletSphere.ChangeRadius(radiusDelta);
+        ChangePlayerRadius(-radiusDelta);
+        bullet.ChangeRadius(radiusDelta);
     }
 
     private void ReleaseCharge() {
         Charging = false;
 
-        _characterSphere.SetRadius(startRadius);
-        bulletSphere.SetRadiusToMinimum();
+        SetPlayerRadius(startRadius);
+        bullet.SetRadiusToMinimum();
+    }
+
+    private void SetPlayerRadius(float newRadius) {
+        Radius = Mathf.Clamp(newRadius, minRadius, maxRadius);
+        OnRadiusChanged?.Invoke();
+    }
+
+    private bool ChangePlayerRadius(float radiusDelta) {
+        var changesRadius = Radius + radiusDelta;
+        Radius = Mathf.Clamp(changesRadius, minRadius, maxRadius);
+        OnRadiusChanged?.Invoke();
+        return Radius == changesRadius;
     }
 
 }
