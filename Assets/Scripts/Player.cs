@@ -46,9 +46,11 @@ public class Player : MonoBehaviour, IBallShape {
     private void Charge() {
         var chargeRadiusDelta = chargeSpeed * Time.deltaTime;
         
-        Radius -= -chargeRadiusDelta;
+        // decrease player radius
+        Radius -= chargeRadiusDelta;
         OnRadiusChanged?.Invoke();
 
+        // increase bullet radius
         bullet.ChangeRadius(chargeRadiusDelta);
     }
 
