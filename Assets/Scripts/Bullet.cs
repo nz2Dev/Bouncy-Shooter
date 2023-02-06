@@ -34,6 +34,10 @@ public class Bullet : MonoBehaviour {
         }
     }
 
+    public void SetPosition(Vector3 position) {
+        _rigidbody.position = position;
+    }
+
     public void SetRadiusToMinimum() {
         SetRadius(minRadius);
     }
