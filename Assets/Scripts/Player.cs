@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Ball))]
-public class Character : MonoBehaviour {
+public class Player : MonoBehaviour {
 
     [SerializeField] private Ball bulletSphere;
     [SerializeField] private float radiusUnitsPerSeconds = 1;
