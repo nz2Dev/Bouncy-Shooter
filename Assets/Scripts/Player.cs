@@ -21,6 +21,9 @@ public class Player : MonoBehaviour, IBallShape {
         OnRadiusChanged?.Invoke();
 
         bullet.SetRadiusToMinimum();
+
+        var initialDistanceToBullet = startRadius + bulletOffset;
+        bullet.SetPosition(transform.position + transform.forward * initialDistanceToBullet);
     }
 
     private void Update() {
@@ -41,9 +44,6 @@ public class Player : MonoBehaviour, IBallShape {
         Charging = true;
 
         bullet.SetRadiusToMinimum();
-
-        var initialDistanceToBullet = Radius + bullet.Radius + bulletOffset;
-        bullet.SetPosition(transform.position + transform.forward * initialDistanceToBullet);
     }
 
     private void Charge() {
