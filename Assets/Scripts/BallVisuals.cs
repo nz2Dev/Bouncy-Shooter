@@ -10,7 +10,7 @@ public class BallVisuals : MonoBehaviour {
     private IBallShape _ballShape;
 
     private void Awake() {
-        var _ballShape = ballGameObject.GetComponent<IBallShape>();
+        _ballShape = ballGameObject.GetComponent<IBallShape>();
         if (_ballShape == null) {
             Debug.LogError("ballGameObject does not have component with IBallShape interface");
         }
