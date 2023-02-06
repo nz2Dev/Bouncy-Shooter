@@ -1288,6 +1288,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f55af32a2c144c7bc2f16f0048e882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detonationMask:
+    serializedVersion: 2
+    m_Bits: 0
+  hitWaveDistance: 0.5
   speedUnitsPerSecond: 4
   minRadius: 0.1
   maxRadius: 5

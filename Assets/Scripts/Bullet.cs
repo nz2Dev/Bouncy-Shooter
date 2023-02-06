@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [SelectionBase]
@@ -12,6 +13,8 @@ public class Bullet : MonoBehaviour, IBallShape {
     public float Radius { get; private set; }
     public bool Flying { get; private set; }
 
+    [SerializeField] private LayerMask detonationMask;
+    [SerializeField] private float hitWaveDistance = 1f;
     [SerializeField] private float speedUnitsPerSecond = 4f;
     [SerializeField] private float minRadius = 0.1f;
     [SerializeField] private float maxRadius = 5;
@@ -21,13 +24,6 @@ public class Bullet : MonoBehaviour, IBallShape {
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
-    }
-    
-    private void FixedUpdate() {
-        if (Flying) {
-            var flyDelta = Time.fixedDeltaTime * speedUnitsPerSecond * _flyDirection;
-            _rigidbody.MovePosition(_rigidbody.position + flyDelta);
-        }
     }
 
     public void SetPosition(Vector3 position) {
@@ -55,11 +51,36 @@ public class Bullet : MonoBehaviour, IBallShape {
         Flying = true;
     }
 
+    private void FixedUpdate() {
+        if (Flying) {
+            var flyDelta = Time.fixedDeltaTime * speedUnitsPerSecond * _flyDirection;
+            _rigidbody.MovePosition(_rigidbody.position + flyDelta);
+        }
+    }
+
     private void OnTriggerEnter(Collider other) {
         if (other.attachedRigidbody != null && other.attachedRigidbody.TryGetComponent(out Obstacle obstacle)) {
             Flying = false;
-            Debug.Log("On Obstacle Triggered");
+            Detonate();
         }
     }
+
+    private void Detonate() {
+        var detonationRadius = Radius + hitWaveDistance;
+        var nearObstaclesHits = Physics.SphereCastAll(transform.position, detonationRadius, Vector3.up, detonationMask);
+        foreach (var obstacleHit in nearObstaclesHits) {
+            if (obstacleHit.rigidbody != null && obstacleHit.rigidbody.TryGetComponent(out Obstacle obstacle)) {
+                obstacle.DestroySelf();
+            }
+        }
+    }
+    
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos() {
+        Handles.color = Color.red;
+        Handles.DrawWireDisc(transform.position, Vector3.up, Radius + hitWaveDistance);
+    }
+#endif
 
 }
