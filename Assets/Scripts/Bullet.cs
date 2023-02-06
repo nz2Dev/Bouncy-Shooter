@@ -5,7 +5,7 @@ using UnityEngine;
 
 [SelectionBase]
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour, IBallShape {
     
     public event Action OnRadiusChanged;
 
