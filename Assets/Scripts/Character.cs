@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ResizableSphere))]
+[RequireComponent(typeof(Ball))]
 public class Character : MonoBehaviour {
 
-    [SerializeField] private ResizableSphere bulletSphere;
+    [SerializeField] private Ball bulletSphere;
     [SerializeField] private float radiusUnitsPerSeconds = 1;
     [SerializeField] private float startRadius = 5;
     [SerializeField] private float bulletOffset = 0.5f;
     
-    private ResizableSphere _characterSphere;
+    private Ball _characterSphere;
 
     public bool Charging { get; private set; }
 
     private void Awake() {
-        _characterSphere = GetComponent<ResizableSphere>();
+        _characterSphere = GetComponent<Ball>();
     }
 
     private void Start() {
