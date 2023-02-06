@@ -30,7 +30,8 @@ public class Bullet : MonoBehaviour, IBallShape {
     
     private void FixedUpdate() {
         if (Flying) {
-            _rigidbody.MovePosition(Time.fixedDeltaTime * speedUnitsPerSecond * _flyDirection);
+            var flyDelta = Time.fixedDeltaTime * speedUnitsPerSecond * _flyDirection;
+            _rigidbody.MovePosition(_rigidbody.position + flyDelta);
         }
     }
 

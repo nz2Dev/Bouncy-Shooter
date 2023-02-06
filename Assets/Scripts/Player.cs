@@ -58,10 +58,7 @@ public class Player : MonoBehaviour, IBallShape {
     private void ReleaseCharge() {
         Charging = false;
 
-        Radius = startRadius;
-        OnRadiusChanged?.Invoke();
-
-        bullet.SetRadiusToMinimum();
+        bullet.Shoot(transform.forward);
     }
 
 }
