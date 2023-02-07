@@ -1535,6 +1535,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1512105382}
+  pathAvailableColor: {r: 1, g: 1, b: 1, a: 0.64705884}
+  pathUnavailableColor: {r: 0.8301887, g: 0.2232111, b: 0.2232111, a: 0.6117647}
 --- !u!1 &1512105379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,8 +1584,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 2017669834}
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   chargeSpeed: 0.3
   startRadius: 0.5
+  criticalMinRadius: 0.1
   bulletOffset: 1
 --- !u!1 &1518222264
 GameObject:

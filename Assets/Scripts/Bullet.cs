@@ -67,6 +67,7 @@ public class Bullet : MonoBehaviour, IBallShape {
 
     private void Detonate() {
         var detonationRadius = Radius + hitWaveDistance;
+        // todo consider using OverlapSphere instead
         var nearObstaclesHits = Physics.SphereCastAll(transform.position, detonationRadius, Vector3.up, detonationMask);
         foreach (var obstacleHit in nearObstaclesHits) {
             if (obstacleHit.rigidbody != null && obstacleHit.rigidbody.TryGetComponent(out Obstacle obstacle)) {
