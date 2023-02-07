@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : MonoBehaviour, IBallShape {
 
     public event Action OnRadiusChanged;
+    public event Action OnChargeBelowCritical;
 
     public float Radius { get; private set; }
     public bool Charging { get; private set; }
@@ -14,7 +15,10 @@ public class Player : MonoBehaviour, IBallShape {
     [SerializeField] private Bullet bullet;
     [SerializeField] private float chargeSpeed = 1;
     [SerializeField] private float startRadius = 5;
+    [SerializeField] private float criticalMinRadius = 0.1f;
     [SerializeField] private float bulletOffset = 0.5f;
+
+    private bool _canCharge = true;
 
     private void Start() {
         Radius = startRadius;
@@ -32,32 +36,42 @@ public class Player : MonoBehaviour, IBallShape {
             ReleaseCharge();
         }
 
-        if (Charging) {
-            Charge();
-        }
+        Charge();
     }
 
     private void StartCharging() {
-        Charging = true;
-
-        LoadBullet();
+        if (_canCharge) {
+            LoadBullet();
+            Charging = true;
+        }
     }
 
     private void Charge() {
-        var chargeRadiusDelta = chargeSpeed * Time.deltaTime;
-        
-        // decrease player radius
-        Radius -= chargeRadiusDelta;
-        OnRadiusChanged?.Invoke();
+        if (_canCharge && Charging) {
+            var chargeRadiusDelta = chargeSpeed * Time.deltaTime;
+            
+            // decrease player radius
+            Radius -= chargeRadiusDelta;
+            OnRadiusChanged?.Invoke();
 
-        // increase bullet radius
-        bullet.ChangeRadius(chargeRadiusDelta);
+            if (Radius <= criticalMinRadius) {
+                _canCharge = false;
+                OnChargeBelowCritical?.Invoke();
+
+                Charging = false;
+            } else {
+                // increase bullet radius
+                bullet.ChangeRadius(chargeRadiusDelta);
+            }
+        }
     }
 
     private void ReleaseCharge() {
-        Charging = false;
+        if (_canCharge && Charging) {
+            Charging = false;
 
-        bullet.Shoot(transform.forward);
+            bullet.Shoot(transform.forward);
+        }
     }
 
     private void LoadBullet() {
