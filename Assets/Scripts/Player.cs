@@ -31,7 +31,7 @@ public class Player : MonoBehaviour, IBallShape {
         Radius = startRadius;
         OnRadiusChanged?.Invoke();
 
-        LoadBullet();
+        HideBullet();
         CheckPathAvailability();
     }
 
