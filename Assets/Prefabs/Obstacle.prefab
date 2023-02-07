@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4767691341826595846}
   - component: {fileID: 4767691341826595847}
   - component: {fileID: 4767691341826595840}
+  - component: {fileID: 4610241497592626085}
+  - component: {fileID: 3035883399458877963}
   m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
@@ -98,6 +100,39 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &4610241497592626085
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4767691341826595842}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5bb0f9212d427454faaa7eb4e4a56ea4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &3035883399458877963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4767691341826595842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 925bd3d28bfd64aeea56f8b9d8ab4d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacle: {fileID: 1072209158599688386}
 --- !u!1 &4767691341839325119
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,3 +195,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee6de0448e3d431e9318be25fcdb5ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyDelay: 1
