@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, IBallShape {
     public event Action OnIsMovingChanged;
 
     public float Radius { get; private set; }
-    public bool Charging { get; private set; } // todo rename with "Is"
+    public bool IsCharging { get; private set; }
     public bool IsMoving { get; private set; }
     public bool IsPathAvailable { get; private set; }
 
@@ -64,12 +64,12 @@ public class Player : MonoBehaviour, IBallShape {
     private void StartCharging() {
         if (_canCharge) {
             LoadBullet();
-            Charging = true;
+            IsCharging = true;
         }
     }
 
     private void Charge() {
-        if (_canCharge && Charging) {
+        if (_canCharge && IsCharging) {
             var chargeRadiusDelta = chargeSpeed * Time.deltaTime;
             
             // decrease player radius
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour, IBallShape {
                 _canCharge = false;
                 OnChargeBelowCritical?.Invoke();
 
-                Charging = false;
+                IsCharging = false;
             } else {
                 // increase bullet radius
                 bullet.ChangeRadius(chargeRadiusDelta);
@@ -89,8 +89,8 @@ public class Player : MonoBehaviour, IBallShape {
     }
 
     private void ReleaseCharge() {
-        if (_canCharge && Charging) {
-            Charging = false;
+        if (_canCharge && IsCharging) {
+            IsCharging = false;
 
             bullet.Shoot(transform.forward);
         }
