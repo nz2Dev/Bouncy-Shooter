@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour, IBallShape {
     public event Action OnRadiusChanged;
 
     public float Radius { get; private set; }
+    public float ShockwaveRadius => Radius + hitWaveDistance;
     public bool Flying { get; private set; }
 
     [SerializeField] private LayerMask detonationMask;
