@@ -100,6 +100,11 @@ public class Player : MonoBehaviour, IBallShape {
         var initialDistanceToBullet = startRadius + bulletOffset;
         bullet.SetPosition(transform.position + transform.forward * initialDistanceToBullet);
         bullet.SetRadiusToMinimum();
+        bullet.gameObject.SetActive(true);
+    }
+
+    private void HideBullet() {
+        bullet.gameObject.SetActive(false);
     }
 
     private void CheckPathAvailability() {
@@ -109,6 +114,7 @@ public class Player : MonoBehaviour, IBallShape {
         if (!IsMoving && IsPathAvailable) {
             IsMoving = true;
             OnIsMovingChanged?.Invoke();
+            HideBullet();
         }
     }
 
