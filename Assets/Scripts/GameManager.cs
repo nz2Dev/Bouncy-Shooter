@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public event Action OnStateChanged;
 
     public State CurrentState { get; private set; }
+    public bool IsPlayingState => CurrentState == State.Playing;
 
     [SerializeField] private Player targetPlayer;
     [SerializeField] private Door targetDoor;

@@ -62,14 +62,14 @@ public class Player : MonoBehaviour, IBallShape {
     }
 
     private void StartCharging() {
-        if (_canCharge) {
+        if (GameManager.Instance.IsPlayingState && _canCharge) {
             LoadBullet();
             IsCharging = true;
         }
     }
 
     private void Charge() {
-        if (_canCharge && IsCharging) {
+        if (GameManager.Instance.IsPlayingState && _canCharge && IsCharging) {
             var chargeRadiusDelta = chargeSpeed * Time.deltaTime;
             
             // decrease player radius
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour, IBallShape {
     }
 
     private void ReleaseCharge() {
-        if (_canCharge && IsCharging) {
+        if (GameManager.Instance.IsPlayingState && _canCharge && IsCharging) {
             IsCharging = false;
 
             bullet.Shoot(transform.forward);
