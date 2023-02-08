@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
 
@@ -26,16 +27,23 @@ public class GameManager : MonoBehaviour {
     }   
 
     private void Start() {
+        GameStart();
+    }
+
+    private void PlayerOnChargeBelowCritical() {
+        GameOver();
+    }
+
+    private void DoorOnPlayerEntered() {
+        GameOver();
+    }
+
+    private void GameStart() {
         CurrentState = State.Playing;
         OnStateChanged?.Invoke();
     }
 
-    private void PlayerOnChargeBelowCritical() {
-        CurrentState = State.GameOver;
-        OnStateChanged?.Invoke();
-    }
-
-    private void DoorOnPlayerEntered() {
+    private void GameOver() {
         CurrentState = State.GameOver;
         OnStateChanged?.Invoke();
     }
