@@ -62,7 +62,7 @@ public class Player : MonoBehaviour, IBallShape {
     }
 
     private void StartCharging() {
-        if (GameManager.Instance.IsPlayingState && _canCharge) {
+        if (GameManager.Instance.IsPlayingState && _canCharge && !IsMoving) {
             LoadBullet();
             IsCharging = true;
         }
