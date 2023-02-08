@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour {
         GameStart();
     }
 
+    public void Restart() {
+        GameStart();
+    }
+
     private void PlayerOnChargeBelowCritical() {
         GameOver();
     }

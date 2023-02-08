@@ -19,7 +19,7 @@ public class GameOverUI : MonoBehaviour {
     }
 
     public void OnRestartButtonClicked() {
-        Debug.LogError("Restart not implemented");
+        GameManager.Instance.Restart();
     }
 
     private void Show() {
