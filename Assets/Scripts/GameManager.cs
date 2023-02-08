@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour {
 
     public enum State {
         Playing,
-        GameOver
+        GameOver,
+        GameFinished
     }
 
     public static GameManager Instance { get; private set; }
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour {
 
     public State CurrentState { get; private set; }
     public bool IsPlayingState => CurrentState == State.Playing;
+    public bool IsGameOverState => CurrentState == State.GameOver;
+    public bool IsGameFinishedState => CurrentState == State.GameFinished;
 
     [SerializeField] private Player targetPlayer;
     [SerializeField] private Door targetDoor;
@@ -31,16 +34,12 @@ public class GameManager : MonoBehaviour {
         GameStart();
     }
 
-    public void Restart() {
-        GameStart();
-    }
-
     private void PlayerOnChargeBelowCritical() {
         GameOver();
     }
 
     private void DoorOnPlayerEntered() {
-        GameOver();
+        GameFinished();
     }
 
     private void GameStart() {
@@ -50,6 +49,11 @@ public class GameManager : MonoBehaviour {
 
     private void GameOver() {
         CurrentState = State.GameOver;
+        OnStateChanged?.Invoke();
+    }
+
+    private void GameFinished() {
+        CurrentState = State.GameFinished;
         OnStateChanged?.Invoke();
     }
     
