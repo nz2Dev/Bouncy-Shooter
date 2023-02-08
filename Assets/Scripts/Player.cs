@@ -111,7 +111,7 @@ public class Player : MonoBehaviour, IBallShape {
         IsPathAvailable = !Physics.SphereCast(transform.position, Radius, transform.forward, out var hitInfo, float.PositiveInfinity, obstaclesLayerMask);
         OnPathAvailabilityUpdated?.Invoke();
 
-        if (!IsMoving && IsPathAvailable) {
+        if (_canCharge && !IsMoving && IsPathAvailable) {
             IsMoving = true;
             OnIsMovingChanged?.Invoke();
             HideBullet();
